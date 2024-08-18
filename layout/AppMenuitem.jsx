@@ -4,6 +4,7 @@ import React, { useContext, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { MenuContext } from './context/menucontext';
 import { CSSTransition } from 'react-transition-group';
+import Icon from '@/hooks/Icon';
 
 const AppMenuitem = (props) => {
   const pathname = usePathname();
@@ -75,19 +76,18 @@ const AppMenuitem = (props) => {
       {props.root && item.visible !== false && (
         <div className="layout-menuitem-root-text">{item.label}</div>
       )}
+
       {(!item.to || item.items) && item.visible !== false ? (
         <a
           href={item.url}
           onClick={itemClick}
-          className={`${item.class || ''} p-ripple`}
+          className={`${item.class} p-ripple`}
           target={item.target}
           tabIndex={0}
         >
-          <i className={`layout-menuitem-icon ${item.icon || ''}`}></i>
+          <Icon name={item.icon} size="15" style={{ marginRight: '8px' }} />
           <span className="layout-menuitem-text">{item.label}</span>
-          {item.items && (
-            <i className="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
-          )}
+          {item.items && <Icon name="angle-down" size="15" />}
         </a>
       ) : null}
 
@@ -97,16 +97,14 @@ const AppMenuitem = (props) => {
           replace={item.replaceUrl}
           target={item.target}
           onClick={itemClick}
-          className={`${item.class || ''} p-ripple ${
+          className={`${item.class} p-ripple ${
             isActiveRoute ? 'active-route' : ''
           }`}
           tabIndex={0}
         >
-          <i className={`layout-menuitem-icon ${item.icon || ''}`}></i>
+          <Icon name={item.icon} size="15" style={{ marginRight: '8px' }} />
           <span className="layout-menuitem-text">{item.label}</span>
-          {item.items && (
-            <i className="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
-          )}
+          {item.items && <Icon name="angle-down" size="15" />}
         </Link>
       ) : null}
 

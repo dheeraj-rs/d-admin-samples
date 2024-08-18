@@ -69,7 +69,7 @@ const Icon = React.memo(
     const [isHovered, setIsHovered] = useState(false);
 
     const memoizedValues = useMemo(() => {
-      const icon = IconService.getIcon(name);
+      const icon = IconService.getIcon(name?.trim());
       if (!icon) {
         console.error(`Icon "${name}" not found`);
         return null;
