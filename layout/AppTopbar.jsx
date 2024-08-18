@@ -8,6 +8,7 @@ import React, {
 import { LayoutContext } from './context/layoutcontext';
 import Image from 'next/image';
 import AppConfig from './AppConfig';
+import Icon from '@/hooks/Icon';
 
 const AppTopbar = forwardRef((props, ref) => {
   const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } =
@@ -43,8 +44,7 @@ const AppTopbar = forwardRef((props, ref) => {
         className="p-link layout-menu-button layout-topbar-button"
         onClick={onMenuToggle}
       >
-        <i className="pi pi-bars" />
-        sss
+        <Icon name="bars" size="25px" />
       </button>
 
       <button
@@ -53,7 +53,7 @@ const AppTopbar = forwardRef((props, ref) => {
         className="p-link layout-topbar-menu-button layout-topbar-button"
         onClick={showProfileSidebar}
       >
-        <i className="pi pi-ellipsis-v" />s
+        <Icon name="calendar-v" size="25px" />
       </button>
 
       <div
@@ -64,19 +64,19 @@ const AppTopbar = forwardRef((props, ref) => {
             : ''
         }`}
       >
-        <button type="button" className="p-link layout-topbar-button">
-          <i className="pi pi-calendar"></i>
-          <span>Calendar</span>C
-        </button>
-        <button type="button" className="p-link layout-topbar-button">
-          <i className="pi pi-user"></i>
-          <span>Profile</span>P
-        </button>
         <AppConfig />
+        <button type="button" className="p-link layout-topbar-button">
+          <Icon name="calendar" size="25px" />
+          <span>Calendar</span>
+        </button>
+        <button type="button" className="p-link layout-topbar-button">
+          <Icon name="user" size="25px" />
+          <span>Profile</span>
+        </button>
         <Link href="/documentation">
           <button type="button" className="p-link layout-topbar-button">
-            <i className="pi pi-cog"></i>
-            <span>Settings</span>S
+            <Icon name="cog" size="25px" />
+            <span>Settings</span>
           </button>
         </Link>
       </div>

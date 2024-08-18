@@ -1,148 +1,83 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { IconService } from '../../../../demo/service/IconService';
-import Icon from './Icon';
+import React, { useState } from 'react';
+import Icon from '@/hooks/Icon';
+import { iconData } from '@/hooks/iconData';
+import IconCustomizeModal from './IconCustomizeModal';
 
 const IconsDemo = () => {
-  const [icons, setIcons] = useState([]);
-  const [filteredIcons, setFilteredIcons] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedIcon, setSelectedIcon] = useState(null);
+  const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
 
-  useEffect(() => {
-    IconService.getIcons().then((data) => {
-      data.sort((icon1, icon2) => {
-        if (icon1.properties.name < icon2.properties.name) return -1;
-        else if (icon1.properties.name < icon2.properties.name) return 1;
-        else return 0;
-      });
+  const icons = iconData.icons || iconData;
+  const filteredIcons = icons.filter((icon) =>
+    (icon.properties?.name || icon.name)
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
-      setIcons(data);
-      setFilteredIcons(data);
-    });
-  }, []);
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-  const onFilter = (event) => {
-    if (!event.currentTarget.value) {
-      setFilteredIcons(icons);
-    } else {
-      setFilteredIcons(
-        icons.filter((it) => {
-          return (
-            it.icon &&
-            it.icon.tags &&
-            it.icon.tags[0].includes(event.currentTarget.value)
-          );
-        })
-      );
-    }
+  const handleIconClick = (icon) => {
+    setSelectedIcon(icon);
+    setIsCustomizeOpen(true);
+  };
+
+  const handleCustomizedClose = () => {
+    setIsCustomizeOpen(false);
+    setSelectedIcon(null);
   };
 
   return (
-    <div className="card">
-      <h2>Icons</h2>
-      <p>
-        my components internally use{' '}
-        <Link
-          href="https://github.com/MyIcons/MyIcons"
-          className="font-medium hover:underline text-primary"
-          target={'_blank'}
-        >
-          MyIcons
-        </Link>{' '}
-        library, the official icons suite from{' '}
-        <Link
-          href="https://www.MyIcons.com"
-          className="font-medium hover:underline text-primary"
-          target={'_blank'}
-        >
-          PrimeTek
-        </Link>
-        .
+    <div
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative"
+      style={{ position: 'relative' }}
+    >
+      <h1 className="text-4xl font-bold text-center mb-4">Gradienticons</h1>
+      <p className="text-xl text-center mb-8">
+        Beautiful Gradient Icons for React
       </p>
-      <h4>Download</h4>
-      <p>
-        MyIcons is available at npm, run the following command to download it to
-        your project.
-      </p>
-      <pre className="app-code">
-        <code>{`npm install myicons --save`}</code>
-      </pre>
-      <h4>Getting Started</h4>
-      <p>
-        MyIcons use the <strong>pi pi-&#123;icon&#125;</strong> syntax such as{' '}
-        <strong>pi pi-check</strong>. A standalone icon can be displayed using
-        an element like <i>i</i> or <i>span</i>
-      </p>
-      <pre className="app-code">
-        <code>
-          {`<i className="pi pi-check" style={{ marginRight: '.5rem' }}></i>
-<i className="pi pi-times"></i>`}
-        </code>
-      </pre>
-      <h4>Size</h4>
-      <p>Size of the icons can easily be changed using font-size property.</p>
-      <pre className="app-code">
-        <code>
-          {`
-<i className="pi pi-check"></i>
-`}
-        </code>
-      </pre>
-      <i className="pi pi-check"></i>
-      <pre className="app-code">
-        <code>
-          {`
-<i className="pi pi-check" style={{ fontSize: '2rem' }}></i>
-`}
-        </code>
-      </pre>
-      <i className="pi pi-check" style={{ fontSize: '2rem' }}></i>
-      <h4>Spinning Animation</h4>
-      <p>Special pi-spin class applies continuous rotation to an icon.</p>
-      <pre className="app-code">
-        <code>{`<i className="pi pi-spin pi-spinner" style={{ fontSize: '2rem' }}></i>`}</code>
-      </pre>
-      <i className="pi pi-spin pi-spinner" style={{ fontSize: '2rem' }}></i>
-      <h4>List of Icons</h4>
-      <p>
-        Here is the current list of PrimeIcons, more icons are added
-        periodically. You may also{' '}
-        <Link
-          href="https://github.com/primefaces/primeicons/issues"
-          className="font-medium hover:underline text-primary"
-          target={'_blank'}
-        >
-          request new icons
-        </Link>{' '}
-        at the issue tracker.
-      </p>
-      <div
-        className="icon-container"
-        style={{ display: 'inline-block', textAlign: 'center', margin: '10px' }}
-      >
-        {' '}
-        <img src="/public/cog.svg" alt="Icon" width="24" height="24" />
-      </div>
-
-      <div>
+      <section className="mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Icon Gallery</h2>
         <input
           type="text"
-          className="w-full p-3 mt-3 mb-5"
-          onInput={onFilter}
-          placeholder="Search an icon"
+          placeholder="Search icons..."
+          className="w-full p-2 mb-4 border border-gray-300 rounded"
+          value={searchTerm}
+          onChange={handleSearch}
         />
-      </div>
-      <div
-        className="grid icons-list text-center"
-        style={{ display: 'flex', flexWrap: 'wrap' }}
-      >
-        {filteredIcons.map((iconObj, index) => (
-          <div key={index} className="icon-item" style={{ margin: '10px' }}>
-            <Icon pathData={iconObj.icon.paths} fill="#2a1818" size="2rem" />
-            <h3>{iconObj.properties.name}</h3>
-          </div>
-        ))}
-      </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {filteredIcons.map((icon) => {
+            const name = icon.properties?.name || icon.name;
+            return (
+              <div
+                key={name}
+                className="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow duration-300 relative cursor-pointer"
+                onClick={() => handleIconClick(icon)}
+              >
+                <Icon
+                  name={name}
+                  {...{
+                    size: 32,
+                    color: 'currentColor',
+                  }}
+                />
+                <span className="mt-2 text-sm text-gray-600">{name}</span>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+      {selectedIcon && (
+        <IconCustomizeModal
+          isOpen={isCustomizeOpen}
+          onClose={handleCustomizedClose}
+          selectedIcon={selectedIcon}
+          initialProps={{ size: 32, color: 'currentColor' }}
+        />
+      )}
     </div>
   );
 };

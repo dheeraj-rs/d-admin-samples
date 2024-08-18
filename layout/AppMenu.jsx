@@ -76,7 +76,7 @@ const AppMenu = () => {
       label: 'Utilities',
       items: [
         {
-          label: 'PrimeIcons',
+          label: 'Icons',
           icon: 'pi pi-fw pi-prime',
           to: '/utilities/icons',
         },

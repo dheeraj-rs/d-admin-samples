@@ -1,4 +1,5 @@
 export const iconData = {
+  IcoMoonType: 'selection',
   icons: [
     {
       icon: {

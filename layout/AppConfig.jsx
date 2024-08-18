@@ -4,6 +4,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { LayoutContext } from './context/layoutcontext';
 import Image from 'next/image';
+import Icon from '@/hooks/Icon';
 
 const AppConfig = (props) => {
   const { layoutConfig, setLayoutConfig, layoutState, setLayoutState } =
@@ -79,12 +80,11 @@ const AppConfig = (props) => {
   return (
     <>
       <button
-        className="p-2 text-gray-600 hover:text-gray-900 fixed top-4 right-4 z-50"
+        className="p-2 text-gray-600 hover:text-gray-900  z-50"
         type="button"
         onClick={onConfigButtonClick}
       >
-        <i className="pi pi-qrcode"></i>
-        iii
+        <Icon name="qrcode" size="22px" />
       </button>
 
       {layoutState.configSidebarVisible && (

@@ -1,4 +1,5 @@
 'use client';
+import GradienticonsWebsite from '@/hooks/GradienticonsWebsite';
 import Icon from '@/hooks/Icon';
 /* eslint-disable @next/next/no-sync-scripts */
 // import { Icon } from '@dheerajrs/d-icon';
@@ -11,13 +12,28 @@ const Documentation = () => {
       <div className="grid">
         <div className="col-12">
           <div className="card docs">
+            <GradienticonsWebsite />
             <h4>Current Version</h4>
             <Icon
               name="home"
-              size="50px"
-              directionStart="right"
-              directionEnd="bottomLeft"
-              gradientColors={['red', '#00ffff']}
+              size={100}
+              // opacity="0.6"
+              // color="blue"
+              // padding="20"
+              // backgroundColor="red"
+              // directionStart="bottom"
+              // hoverColor={'red'}
+              // directionEnd="top"
+              // hoverGradientColors={['red', 'blue']}
+              gradientColors={['#647758', '#0875']}
+            />
+
+            <Icon
+              name="eraser"
+              size={40}
+              padding={8}
+              color="#4A90E2"
+              boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)"
             />
             {/* <Icon name="home" size="20" color="blue" /> */}
             <p>Next v14 Javascript</p>
